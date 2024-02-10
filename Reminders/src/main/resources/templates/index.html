@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Remind ME</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        /* Default styles */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        h4 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .usage-info {
+            margin-top: 20px;
+        }
+        .usage-info p {
+            font-weight: bold;
+        }
+
+        /* Styles for small screens */
+        @media only screen and (max-width: 767px) {
+            body {
+                padding-top: 70px; /* Adjust top padding to accommodate navbar */
+            }
+            h1 {
+                font-size: 24px; /* Decrease font size for smaller screens */
+            }
+            h4 {
+                font-size: 18px; /* Decrease font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- create navigation bar (header) -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/reminders}">Remind</a>
+            </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/reminders/getAll}">RemindersList</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+
+    <div class="usage-info">
+        <h1>Welcome to Daily Reminder</h1>
+        <h4>Hi <span sec:authentication="principal.username"></span></h4>
+        <div>
+            <p><span style="font-weight: bold;">Functionality:</span> This website serves as a reminder tool. Simply navigate to the "Reminder" tab, where you can easily create reminders for various tasks or events.</p>
+            <p><span style="font-weight: bold;">Usage:</span> Click on the "Reminder" tab to access the reminder creation feature. Input the details of your reminder, including the title, date, and any additional notes.</p>
+            <p><span style="font-weight: bold;">Notification:</span> Once your reminder is set, the website will send you notifications on the specified day to ensure you don't forget your task or event.</p>
+            <p><span style="font-weight: bold;">Stay Organized:</span> With this convenient tool, you can stay organized and on top of your schedule by setting timely reminders for all your important commitments.</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

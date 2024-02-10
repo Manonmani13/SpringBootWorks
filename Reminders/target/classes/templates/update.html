@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Reminder</title>
+ 
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Reminders</h1>
+        <hr>
+        <h2>Update Reminders</h2>
+ 
+        <form action="#" th:action="@{/reminders/update}" th:object="${reminder}"
+            method="GET">
+           <div class="form-group">
+						<label class="control-label" for="Name">Name </label>
+						<input id="Name" class="form-control" th:field="*{Name}"
+						pattern="[A-Za-z\s]{2,}"	required autofocus="autofocus" />
+					</div>
+
+					<div  id="calendar">
+						<label class="control-label" for="date"> Date</label> <input
+							id="date" type="date" class="form-control" th:field="*{date}"
+							required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="message"> MEssage </label> <input
+							id="message" class="form-control" th:field="*{message}" required
+							autofocus="autofocus" />
+					</div>					
+
+					<div class="form-group">
+					</div>                <button type="submit" class="btn btn-info col-2"> Update Reminders</button>
+						
+        </form>
+         
+        <hr>
+         
+        <a th:href = "@{/reminders/getAll}"> Back to Reminder List</a>
+    </div>
+</body>
+</html>
