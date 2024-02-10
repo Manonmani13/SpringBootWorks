@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reminder ME</title>
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Include CSRF token and header -->
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remind ME</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        .btn-primary,
+        .btn-danger {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .navbar-brand {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/reminders}">Create Reminder</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/reminders/getAll}">View All Reminders</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+
+            <div th:if="${param.success}" class="alert alert-info">You've successfully Created Your Reminders!</div>
+
+            <h1 class="text-center mb-4">Create Your Reminder</h1>
+
+            <form th:action="@{/reminders}" method="post" th:object="${reminder}">
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" class="form-control" id="Name" th:field="*{Name}"
+                    pattern="[A-Za-z\s]{2,}" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" class="form-control" id="date" th:field="*{date}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <input type="text" class="form-control" id="message" th:field="*{message}" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block">Submit</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <h2 class="text-center mb-4">Get Birthday Names</h2>
+
+            <form th:action="@{/reminders/getBirthdayNames}" method="post">
+                <div class="form-group">
+                    <label for="userInput">Number of Days for Birthday Names</label>
+                    <input type="number" class="form-control" id="userInput" name="userInput" required min="1">
+                    <small class="form-text text-muted">Enter the number of days to retrieve birthday names</small>
+                </div>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                <div class="form-group">
+                    <button type="button" id="getBirthdayNamesButton" class="btn btn-primary btn-block">Get Birthday Names</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upcoming Birthdays</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="responseText"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#getBirthdayNamesButton').click(function() {
+            event.preventDefault();
+
+            var form = $('form:last');
+            var formData = form.serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '/reminders/getBirthdayNames',
+                data: formData,
+                success: function(response) {
+                    $('#responseText').text(response);
+                    $('#responseModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
