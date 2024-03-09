@@ -16,20 +16,17 @@ public class CitizenPlanServiceImpl implements CitizenPlanService {
 
 	@Override
 	public List<String> getPlanNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return citizenPlanRepo.getPlanNames();
 	}
 
 	@Override
 	public List<String> getPlanStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		return citizenPlanRepo.getPlanStatus();
 	}
 
 	@Override
 	public List<CitizenPlan> search(SearchRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return citizenPlanRepo.findAll();
 	}
 
 	@Override

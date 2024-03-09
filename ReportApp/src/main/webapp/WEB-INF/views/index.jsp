@@ -1,35 +1,83 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib  prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <html>
 <head>
-
-<meta charset="UTF-8">
- <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Reports App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
+</head>
 <body>
 <div class="container">
-<h3>Report Application</h3>
-
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-   Male
-  </label>
+    <h3 class="pb-3">Report Application</h3>
+    <form:form action="search" modelAttribute="searchObj" method="POST">
+        <table>
+            <tr>
+                <td>Plan Name:</td>
+                <td>
+                    <form:select path="planName">
+                        <form:option value="">-Select-</form:option>
+                        <form:options items="${names}"/>
+                    </form:select>
+                </td>
+                <td>Plan Status:</td>
+                <td>
+                    <form:select path="planStatus">
+                        <form:option value="">-Select-</form:option>
+                        <form:options items="${status}"/>
+                    </form:select>
+                </td>
+                <td>Gender:</td>
+                <td>
+                    <form:select path="gender">
+                        <form:option value="">-Select-</form:option>
+                        <form:option value="Male">Male</form:option>
+                        <form:option value="Fe-Male">Fe-Male</form:option>
+                    </form:select>
+                </td>
+            </tr>
+            <tr>
+                <td>Start Date:</td>
+                <td><form:input type="date" path="startDate"/></td>
+                <td>End Date:</td>
+                <td><form:input type="date" path="endDate"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" class="btn btn-primary"/></td>
+            </tr>
+        </table>
+    </form:form>
+    <hr/>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Holder Name</th>
+                <th>Plan Name</th>
+                <th>Plan Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${plans}" var="plan" varStatus="index">
+        <tr>
+        <td>${index.count}</td>
+        </tr>
+         <tr>
+        <td>${plan.citizenName}</td>
+        </tr>
+        </c:forEach>
+        
+        </tbody>
+    </table>
+    <hr/>
+    Export:<a href="">Excel</a>   <a href="">Pdf</a>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-  <label class="form-check-label" for="flexRadioDefault2">
-    Fe-Male
-  </label>
-</div>
-<button class="btn btn-primary">Search</button>
-
-</div>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
- 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
