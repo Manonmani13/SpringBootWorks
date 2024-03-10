@@ -2,12 +2,11 @@ package com.report.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.report.entity.CitizenPlan;
-import com.report.repository.CitizenPlanRepository;
 import com.report.request.SearchRequest;
+
 public interface CitizenPlanService {
 
 	public List<String> getPlanNames();
@@ -15,8 +14,8 @@ public interface CitizenPlanService {
 	public List<String> getPlanStatus();
 	public List<CitizenPlan> search(SearchRequest request);
 	
-	public boolean exportExcel();
+	public boolean exportExcel(HttpServletResponse response) throws Exception;
 	
-	public boolean exportPdf();
+	public boolean exportPdf(HttpServletResponse response) throws Exception;
 
 }

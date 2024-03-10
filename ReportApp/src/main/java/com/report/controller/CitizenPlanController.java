@@ -2,10 +2,12 @@ package com.report.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.report.entity.CitizenPlan;
 import com.report.request.SearchRequest;
 import com.report.service.CitizenPlanServiceImpl;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 
 
 @Controller
@@ -37,7 +42,7 @@ public class CitizenPlanController {
 		model.addAttribute("status",citizenPlanService.getPlanStatus());
 	}
 	@PostMapping("search")
-	public String handleSearch(SearchRequest request,Model model)
+	public String handleSearch(@ModelAttribute("search") SearchRequest request,Model model)
 	{
 		System.out.println(request);
 		List<CitizenPlan> plans=citizenPlanService.search(request);
@@ -45,5 +50,19 @@ public class CitizenPlanController {
 		
 		init(model);
 		return "index";
+	}
+	@GetMapping("/excel")
+	public void excelExport(HttpServletResponse response) throws Exception
+	{
+		response.setContentType("application/octet-stream");
+		response.addHeader("Content-Disposition", "attachment;filename=plans.xlsx");
+		citizenPlanService.exportExcel(response);
+	}
+	@GetMapping("/pdf")
+	public void pdfExport(HttpServletResponse response) throws Exception
+	{
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "attachment;filename=plans.pdf");
+		citizenPlanService.exportPdf(response);
 	}
 }

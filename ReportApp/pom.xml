@@ -64,20 +64,43 @@
     <scope>provided</scope>
 </dependency>	
 <dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>jstl</artifactId>
-    <version>1.2</version>
+    <groupId>jakarta.servlet.jsp.jstl</groupId>
+    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+    <version>2.0.0</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 <dependency>
-    <groupId>javax.servlet.jsp</groupId>
-    <artifactId>javax.servlet.jsp-api</artifactId>
-    <version>2.3.3</version>
-    <scope>provided</scope>
+    <groupId>org.glassfish.web</groupId>
+    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+    <version>2.0.0</version>
 </dependency>
-
-
-
+<dependency>
+    <groupId>taglibs</groupId>
+    <artifactId>standard</artifactId>
+    <version>1.1.2</version>
+    <exclusions>
+        <exclusion>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>5.2.5</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.github.librepdf/openpdf -->
+<dependency>
+    <groupId>com.github.librepdf</groupId>
+    <artifactId>openpdf</artifactId>
+    <version>2.0.1</version>
+</dependency>
+<dependency>
+    <groupId>com.lowagie</groupId>
+    <artifactId>itext</artifactId>
+    <version>2.1.7</version>
+</dependency>
 	</dependencies>
 
 	<build>

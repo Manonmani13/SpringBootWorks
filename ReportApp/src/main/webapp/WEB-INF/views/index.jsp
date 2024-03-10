@@ -57,26 +57,37 @@
             <tr>
                 <th>Id</th>
                 <th>Holder Name</th>
+                <th>Gender</th>                
                 <th>Plan Name</th>
                 <th>Plan Status</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Benefit Amt</th>
+             
             </tr>
         </thead>
         <tbody>
         <c:forEach items="${plans}" var="plan" varStatus="index">
         <tr>
         <td>${index.count}</td>
+        <td>${plan.citizenName }</td>
+        <td>${plan.gender }</td>        
+        <td>${plan.planName }</td>
+        <td>${plan.planStatus }</td>
+        <td>${plan.planStartDate }</td>
+        <td>${plan.planEndDate }</td>
+        <td>${plan.benefitAmt }</td>
+                
         </tr>
-         <tr>
-        <td>${plan.citizenName}</td>
-        </tr>
-        </c:forEach>
         
+        </c:forEach>
+        <c:if test="${empty plans  }">
+        	<td colspan="8" style="text-align: center" >No records found</td>
+        </c:if>
         </tbody>
     </table>
     <hr/>
-    Export:<a href="">Excel</a>   <a href="">Pdf</a>
+    Export:<a href="excel">Excel</a>   <a href="pdf">Pdf</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
