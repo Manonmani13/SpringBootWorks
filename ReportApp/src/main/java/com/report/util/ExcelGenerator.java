@@ -1,5 +1,7 @@
 package com.report.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class ExcelGenerator {
-	public void generate(HttpServletResponse response,List<CitizenPlan> plan) throws Exception {
+	public void generate(HttpServletResponse response,List<CitizenPlan> plan,File f) throws Exception {
 		Workbook workbook=new HSSFWorkbook();
 	
 		Sheet sheet=workbook.createSheet("plans-data");
@@ -51,9 +53,11 @@ public class ExcelGenerator {
 			datarowIndex++;
 
 		}
-
+		FileOutputStream fos=new FileOutputStream(f);
+		workbook.write(fos);
 		ServletOutputStream stream=response.getOutputStream();
 		workbook.write(stream);
+		workbook.close();
 	}
 
 }

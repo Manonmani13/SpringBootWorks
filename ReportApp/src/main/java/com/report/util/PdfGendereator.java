@@ -1,5 +1,7 @@
 package com.report.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,10 +24,11 @@ public class PdfGendereator {
 	@Autowired
 	private CitizenPlanRepository planRepo;
 	
-	public void generate(HttpServletResponse response,List<CitizenPlan> plans) throws  IOException
+	public void generate(HttpServletResponse response,List<CitizenPlan> plans,File f) throws  IOException
 	{
 		Document document =new Document(PageSize.A4);
-		PdfWriter.getInstance(document, response.getOutputStream());
+//		PdfWriter pdfWriter= PdfWriter.getInstance(document, response.getOutputStream());
+		PdfWriter.getInstance(document, new FileOutputStream(f));
 		document.open();
 		Font fonttitle=FontFactory.getFont(FontFactory.TIMES_ROMAN);
 		fonttitle.setSize(20);

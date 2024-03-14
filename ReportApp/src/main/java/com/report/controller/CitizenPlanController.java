@@ -52,17 +52,19 @@ public class CitizenPlanController {
 		return "index";
 	}
 	@GetMapping("/excel")
-	public void excelExport(HttpServletResponse response) throws Exception
+	public void excelExport(HttpServletResponse response,Model model) throws Exception
 	{
 		response.setContentType("application/octet-stream");
 		response.addHeader("Content-Disposition", "attachment;filename=plans.xlsx");
 		citizenPlanService.exportExcel(response);
+	
 	}
 	@GetMapping("/pdf")
-	public void pdfExport(HttpServletResponse response) throws Exception
+	public void pdfExport(HttpServletResponse response,Model model) throws Exception
 	{
 		response.setContentType("application/pdf");
 		response.addHeader("Content-Disposition", "attachment;filename=plans.pdf");
-		citizenPlanService.exportPdf(response);
+		 citizenPlanService.exportPdf(response);
+		
 	}
 }

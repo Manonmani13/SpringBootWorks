@@ -27,6 +27,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.report.entity.CitizenPlan;
 import com.report.repository.CitizenPlanRepository;
 import com.report.request.SearchRequest;
+import com.report.util.EmailUtils;
 import com.report.util.ExcelGenerator;
 import com.report.util.PdfGendereator;
 
@@ -39,6 +40,8 @@ public class CitizenPlanServiceImpl implements CitizenPlanService {
 	private ExcelGenerator excelGeneator;
 	@Autowired
 	private PdfGendereator pdfGendereator;
+	@Autowired
+	EmailUtils emailUtils;
 	
 
 	@Override
@@ -84,17 +87,31 @@ public class CitizenPlanServiceImpl implements CitizenPlanService {
 
 	@Override
 	public boolean exportExcel(HttpServletResponse response) throws Exception {
+		File f=new File("Plans.xls");
+
 		List<CitizenPlan> plan=citizenPlanRepo.findAll();
-		excelGeneator.generate(response, plan);
+		excelGeneator.generate(response, plan,f);
+		String  subject="Test mail subject";
+		String body="<h1>Test Mail body</h1>";
+		String to="manonmani.pandukumar@gmail.com";
 		
+		emailUtils.sendMail(subject, body, to,f);
+		f.delete();
 		return true;
 	}
 
 	@Override
 	public boolean exportPdf(HttpServletResponse response) throws Exception {
+		File f=new File("Plans.pdf");
+
 		List<CitizenPlan> plans=citizenPlanRepo.findAll();
-		pdfGendereator.generate(response, plans);
-		
+		pdfGendereator.generate(response, plans,f);
+		String  subject="Test mail subject";
+		String body="<h1>Test Mail body</h1>";
+		String to="manonmani.pandukumar@gmail.com";
+
+		emailUtils.sendMail(subject, body, to,f);
+		f.delete();
 		return true;
 	}
 
