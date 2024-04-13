@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.learning.entity.OrderDetailsEntity;
 import com.learning.repository.OrderDetailsRepo;
 @ComponentScan("com.learning")
-
+//custom
 @SpringBootApplication
 public class Application {
 
