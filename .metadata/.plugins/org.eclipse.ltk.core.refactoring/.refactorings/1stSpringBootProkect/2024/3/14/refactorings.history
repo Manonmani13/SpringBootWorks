@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.learning.repository.OrderIdGeneratorRepo&apos; to &apos;OrderDetailsRepo&apos;&#x0A;- Original project: &apos;1stSpringBootProkect&apos;&#x0A;- Original element: &apos;com.learning.repository.OrderIdGeneratorRepo&apos;&#x0A;- Renamed element: &apos;com.learning.repository.OrderDetailsRepo&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;OrderIdGeneratorRepo&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.learning.repository{OrderIdGeneratorRepo.java[OrderIdGeneratorRepo" matchStrategy="1" name="OrderDetailsRepo" qualified="false" references="true" similarDeclarations="false" stamp="1711881042534" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,21 @@
+package com.learning.entity;
+
+import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="ORDR_DTLS")
+public class OrderDetailsEntity {
+	@Id
+	
+	private String orderId;
+	
+	private String orderBy;
+	
+	private Date orderPlacedDate;
+	
+
+}

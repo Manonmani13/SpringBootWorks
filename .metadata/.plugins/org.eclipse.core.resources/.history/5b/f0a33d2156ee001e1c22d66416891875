@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no"/>
+	<meta http-equiv="x-ua-compatiable" content="ie=edge"/>
+
+    <title>Material Design for Bootstrap</title>
+	<link rel="icon" href="img/mdbfavicon.ico" type="image/-icon">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"/> 
+	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:wght@300;400;500;700;900&displayswap"/>
+	
+	<link rel="stylesheet" href="css/bootstrap-login-form.min.css"/>  
+ <style>
+	.gradient-custom-2{
+		background-color: #fccb90;
+		background: -webkit-linear-gradient(to right,#ee7724,#d8363a,#dd3675,#b44593);
+		background: linear-gradient(to right,#ee7724,#d8363a,#dd3875,#b44593);
+	}
+	@media{ min-width : 768px){
+		.gradient-form{
+			height: 100vh !important;
+		}
+	}
+	
+
+</style>
+  </head>
+  <body>
+  </body>
+</html>

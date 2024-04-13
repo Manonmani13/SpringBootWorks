@@ -1,0 +1,39 @@
+package com.learning.generators;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import org.hibernate.Session;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+
+public class OrderIDGenerator implements IdentifierGenerator {
+
+	@Override
+	public Object generate(SharedSessionContractImplementor session, Object object) {
+		// TODO Auto-generated method stub
+		
+		String prefix="OD";
+		String suffox="";
+		try {
+			SharedSessionContractImplementor sharedSession = (SharedSessionContractImplementor) session;
+			java.sql.Connection connection = sharedSession.connection();
+
+Connection con=(Connection) session.getJdbcConnectionAccess();
+Statement stat=connection.createStatement();
+String sql="select order_id_seq.netval from dual";
+ResultSet rs=stat.executeQuery(sql);
+
+if(rs.next())
+{
+	int seqval=rs.getInt(1);
+	suffox=String.valueOf(seqval);
+}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return prefix+suffox;
+	}
+
+}

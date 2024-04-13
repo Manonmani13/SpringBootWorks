@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap</title>
+    <link rel="icon" href="img/mdbfavicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-login-form.min.css">
+    <style>
+        .gradient-custom-2 {
+            background-color: #fccb90;
+            background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+            background: linear-gradient(to right, #ee7724, #d8363a, #dd3875, #b44593);
+        }
+        @media (min-width: 768px) {
+            .gradient-form {
+                height: 100vh !important;
+            }
+        }
+        /* Additional styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .navbar-brand img {
+            max-width: 200px;
+            height: auto;
+        }
+        .navbar-nav .nav-link {
+            color: #000;
+        }
+        .btn-login {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="gradient-custom-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <img src="images/logo.jpeg" alt="Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="btn btn-danger btn-login">Login</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+			</div>
+
+            <div class="col-md-6">
+                <form th:action="@{/login}" method="post">
+                    <p>Please Login to your Account</p>						
+                    <div class="form-outline mb-4">
+                        <input type="email" class="form-control" id="username" placeholder="Enter Email ID"/>
+                        <label class="form-label" for="username">UserName</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="password" class="form-control" id="password" placeholder="Enter Password"/>
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button class="btn btn-primary btn-block btn-lg gradient-custom-2 mb-4" type="submit">Login</button>
+                        <a class="text-muted" href="forgot">Forgot Password</a>
+                    </div>
+                </form>
+            </div>
+</body>
+</html>

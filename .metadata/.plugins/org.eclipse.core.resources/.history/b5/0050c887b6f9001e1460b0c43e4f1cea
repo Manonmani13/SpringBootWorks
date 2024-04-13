@@ -1,0 +1,75 @@
+package com.learning.generators;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+@Service
+public class OrderIDGenerator implements IdentifierGenerator {
+     String suffix = "";
+
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderIDGenerator(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setPackagesToScan("com.learning.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
+
+    @Bean
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory);
+        return transactionManager;
+    }
+
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        // Add more Hibernate properties as needed
+        return properties;
+    }
+    @Override
+    public Object generate(SharedSessionContractImplementor session1, Object object) {
+        String prefix = "OD";
+
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.doWork((Work) connection -> {
+                try (Statement statement = connection.createStatement()) {
+                    ResultSet rs = statement.executeQuery("SELECT order_id_seq.netval FROM dual");
+
+                    if (rs.next()) {
+                        suffix = String.valueOf(rs.getInt(1));
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return prefix + suffix;
+    }
+}

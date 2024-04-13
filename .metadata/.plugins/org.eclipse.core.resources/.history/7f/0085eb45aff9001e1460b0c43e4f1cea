@@ -1,0 +1,5 @@
+package com.learning.generators;
+
+public class HibernateConfig {
+
+}

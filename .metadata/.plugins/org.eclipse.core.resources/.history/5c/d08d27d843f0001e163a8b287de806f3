@@ -1,0 +1,23 @@
+package com.learning;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import com.learning.entity.OrderDetailsEntity;
+import com.learning.repository.OrderDetailsRepo;
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		
+		ConfigurableApplicationContext ct=SpringApplication.run(Application.class, args);
+		OrderDetailsRepo bean=ct.getBean(OrderDetailsRepo.class);
+		OrderDetailsEntity entity=new OrderDetailsEntity();
+//		entity.s
+		ct.close();
+		
+	}
+
+}

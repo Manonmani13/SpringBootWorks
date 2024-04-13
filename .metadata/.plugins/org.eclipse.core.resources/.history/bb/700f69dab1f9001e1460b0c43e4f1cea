@@ -1,0 +1,72 @@
+package com.learning.generators;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.sql.DataSource;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OrderIDGenerator implements IdentifierGenerator {
+	@Autowired
+	private final SessionFactory sessionFactory;
+	 @Autowired
+	    private DataSource dataSource;
+//    @Autowired
+//    public OrderIDGenerator(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
+	 String suffox="";
+
+	public Object generate(SharedSessionContractImplementor session, Object object) {
+		// TODO Auto-generated method stub
+		
+		String prefix="OD";
+			Session session1 = null;
+			try {
+				session1 = sessionFactory.getCurrentSession();
+			} catch (HibernateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // Assuming sessionFactory is your Hibernate SessionFactory instance
+
+			session1.doWork((Work) new Work() {
+			    @Override
+			    public void execute(Connection connection) throws SQLException {
+			        // Use the connection here
+			    	Statement stat=connection.createStatement();
+			    	String sql="select order_id_seq.netval from dual";
+			    	ResultSet rs=stat.executeQuery(sql);
+
+			    	if(rs.next())
+			    	{
+			    		int seqval=rs.getInt(1);
+			    		suffox=String.valueOf(seqval);
+			    	}
+
+			    }
+			});
+
+
+	
+		return prefix+suffox;
+	}
+	@Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        // Set Hibernate properties, entity packages, etc.
+        return sessionFactory;
+    }
+}

@@ -1,0 +1,42 @@
+package com.learning;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.learning.entity.OrderDetailsEntity;
+import com.learning.repository.OrderDetailsRepo;
+@ComponentScan("com.learning")
+@SpringBootApplication(scanBasePackages = {"com.learning"} , exclude = JpaRepositoriesAutoConfiguration.class)
+@EnableTransactionManagement
+//@SpringBootApplication
+public class Application extends SpringBootServletInitializer {
+
+	public static void main(String[] args) {
+		
+		ConfigurableApplicationContext ct=SpringApplication.run(Application.class, args);
+		OrderDetailsRepo bean=ct.getBean(OrderDetailsRepo.class);
+		OrderDetailsEntity entity=new OrderDetailsEntity();
+		entity.setOrderPlacedDate(new Date());
+		entity.setOrderBy("Miller");
+		OrderDetailsEntity save=bean.save(entity);
+		System.out.println(save);
+
+//		entit
+		ct.close();
+		
+	}
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
+}

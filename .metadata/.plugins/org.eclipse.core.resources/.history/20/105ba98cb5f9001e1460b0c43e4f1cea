@@ -1,0 +1,45 @@
+package com.learning.generators;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.sql.DataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OrderIDGenerator implements IdentifierGenerator {
+     String suffix = "";
+
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderIDGenerator(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Object generate(SharedSessionContractImplementor session1, Object object) {
+        String prefix = "OD";
+
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.doWork((Work) connection -> {
+                try (Statement statement = connection.createStatement()) {
+                    ResultSet rs = statement.executeQuery("SELECT order_id_seq.netval FROM dual");
+
+                    if (rs.next()) {
+                        suffix = String.valueOf(rs.getInt(1));
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return prefix + suffix;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap - User Login</title>
+    <link rel="icon" href="img/mdbfavicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-login-form.min.css">
+    <style>
+        body {
+            background-color: #fccb90; /* Set background color */
+        }
+        .login-container {
+            margin-top: 50px; /* Adjust top margin for better alignment */
+        }
+        .login-heading {
+            text-align: center; /* Center align the heading */
+            margin-bottom: 30px; /* Add space below the heading */
+        }
+        .login-form {
+            background-color: #fff; /* Set background color for the form */
+            padding: 30px; /* Add padding to the form */
+            border-radius: 5px; /* Add border radius for better appearance */
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            margin-bottom: 20px; /* Add space between input fields */
+        }
+        .login-form .btn-primary {
+            width: 100%; /* Make the login button full width */
+        }
+        .register-link {
+            text-align: center; /* Center align the register link */
+            margin-top: 20px; /* Add space above the link */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center login-container">
+            <div class="col-md-6">
+                <div class="login-form">
+                    <h1 class="login-heading">User Login Page</h1>
+                    <form action="/login" method="post">
+                        <!-- Error message -->
+                        <div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
+                        <!-- Logout message -->
+                        <div th:if="${param.logout}" class="alert alert-info">You have been logged out.</div>
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Email ID" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Log In</button>
+                        </div>
+                    </form>
+                    <div class="register-link">
+                        <span>New user? <a href="/registration" th:href="@{/registration}">Register here</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

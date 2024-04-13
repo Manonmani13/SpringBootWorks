@@ -1,0 +1,29 @@
+package com.learning.generators;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+@Configuration
+public class JpaConfig {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        // Set JPA vendor adapter, packages to scan, properties, etc.
+        emf.afterPropertiesSet();
+        return (EntityManagerFactory) emf.getObject();
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
+    }
+}

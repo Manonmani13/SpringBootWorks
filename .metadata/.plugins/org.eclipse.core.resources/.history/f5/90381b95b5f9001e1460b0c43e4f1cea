@@ -1,0 +1,34 @@
+package com.learning.generators;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
+import javax.sql.DataSource;
+import java.util.Properties;
+
+@Configuration
+public class HibernateConfig {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public SessionFactory sessionFactory() throws Exception {
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setDataSource(dataSource);
+        sessionFactoryBean.setPackagesToScan("com.learning.entity"); // Package containing your entities
+        sessionFactoryBean.setHibernateProperties(hibernateProperties());
+        sessionFactoryBean.afterPropertiesSet();
+        return sessionFactoryBean.getObject();
+    }
+
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect"); // Adjust dialect as needed
+        properties.put("hibernate.show_sql", "true");
+        // Add more properties as needed
+        return properties;
+    }
+}

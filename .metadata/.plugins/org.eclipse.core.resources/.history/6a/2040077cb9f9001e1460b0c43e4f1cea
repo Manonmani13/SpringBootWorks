@@ -1,0 +1,10 @@
+package com.learning.generators;
+
+@Configuration
+public class HibernateConfig {
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        // Configure and return LocalSessionFactoryBean
+    }
+}

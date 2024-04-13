@@ -1,0 +1,8 @@
+package com.learning.repository;
+
+
+import com.learning.entity.OrderDetailsEntity;
+
+public interface OrderDetailsRepo extends JpaRepository<OrderDetailsEntity, String> {
+
+}

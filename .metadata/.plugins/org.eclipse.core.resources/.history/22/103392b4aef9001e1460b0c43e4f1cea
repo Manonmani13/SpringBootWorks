@@ -1,0 +1,59 @@
+package com.learning.generators;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class OrderIDGenerator implements IdentifierGenerator {
+
+	private final SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderIDGenerator(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+	public Object generate(SharedSessionContractImplementor session, Object object) {
+		// TODO Auto-generated method stub
+		
+		String prefix="OD";
+		 final String suffox="";
+			Session session1 = null;
+			try {
+				session1 = sessionFactory.getCurrentSession();
+			} catch (HibernateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // Assuming sessionFactory is your Hibernate SessionFactory instance
+
+			session1.doWork((Work) new Work() {
+			    @Override
+			    public void execute(Connection connection) throws SQLException {
+			        // Use the connection here
+			    	Statement stat=connection.createStatement();
+			    	String sql="select order_id_seq.netval from dual";
+			    	ResultSet rs=stat.executeQuery(sql);
+
+			    	if(rs.next())
+			    	{
+			    		int seqval=rs.getInt(1);
+			    		suffox=String.valueOf(seqval);
+			    	}
+
+			    }
+			});
+
+
+	
+		return prefix+suffox;
+	}
+
+}
